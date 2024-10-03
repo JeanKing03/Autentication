@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const User = require("../models/User");
 
 const createServices = async (user) => {
@@ -20,10 +21,15 @@ const removeServices = async (id) => {
   return await User.destroy({ where: { id } });
 };
 
+const getUserServices = async (email) => {
+  return await User.findOne({ where: { email } });
+};
+
 module.exports = {
   createServices,
   getAllSevices,
   getOneServices,
   updateServices,
   removeServices,
+  getUserServices,
 };
