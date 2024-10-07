@@ -13,11 +13,11 @@ const getOneServices = async (id) => {
 };
 
 const updateServices = async (info, id) => {
-  return await Post.update(info, { where: { id }, returning: true });
+  return await Post.update(info, { where: { id } });
 };
 
 const removeServices = async (id) => {
-  return await Post.destroy({ where: { id } });
+  return await Post.destroy({ where: { id }, returning: true });
 };
 
 module.exports = {

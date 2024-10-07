@@ -1,9 +1,14 @@
+const Favorite = require("./Favorite");
 const Post = require("./Post");
 const User = require("./User");
 
-//* Post <-> User
-User.belongsToMany(Post, { through: "favorites" });
-Post.belongsToMany(User, { through: "favorites" });
+//* User <-> Favorite
+Favorite.belongsTo(User, { foreignKey: "userLikeId" });
+User.hasMany(Favorite, { foreignKey: "userLikeId" });
+
+//* Post <-> Favorite
+Favorite.belongsTo(Post, { foreignKey: "postId" });
+Post.hasMany(Favorite, { foreignKey: "postId" });
 
 //* Post -> User
 Post.belongsTo(User);

@@ -15,12 +15,14 @@ const create = catchError(async (req, res) => {
 
 const getAll = catchError(async (req, res) => {
   const result = await getAllServices();
-  return res.json(result);
+  if (!result) return res.sendStatus(404);
+  return res.status(201).json(result);
 });
 
 const getOne = catchError(async (req, res) => {
   const { id } = req.params;
   const result = await getOneServices(id);
+  if (!result) return res.sendStatus(404);
   return res.json(result);
 });
 
@@ -28,13 +30,16 @@ const update = catchError(async (req, res) => {
   const { id } = req.params;
   const { post } = req.body;
   const result = await updateServices({ post }, id);
-  return res.json(result[1]);
+  if (!result) return res.sendStatus(404);
+  return res.json(result[1][0]);
 });
 
 const remove = catchError(async (req, res) => {
   const { id } = req.params;
-  await removeServices(id);
-  return res.status(204);
+  const result = await removeServices(id);
+  console.log(result);
+  if (!result) return res.sendStatus(404);
+  return res.sendStatus(204);
 });
 
 module.exports = { create, getAll, getOne, update, remove };
